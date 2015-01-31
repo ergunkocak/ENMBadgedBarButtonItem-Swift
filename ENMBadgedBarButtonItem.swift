@@ -10,8 +10,8 @@ import UIKit
 import Foundation
 import QuartzCore
 
-let kENMDefaultPadding: CGFloat = 3.0
-let kENMDefaultMinSize: CGFloat = 8.0
+let kENMDefaultPadding: CGFloat = 6.0
+let kENMDefaultMinSize: CGFloat = 2.0
 let kENMDefaultOriginX: CGFloat = 0.0
 let kENMDefaultOriginY: CGFloat = 0.0
 
@@ -46,6 +46,16 @@ class ENMBadgedBarButtonItem: UIBarButtonItem {
         }
     }
     var badgeFont: UIFont = UIFont.systemFontOfSize(12.0){
+        didSet {
+            refreshBadgeLabelProperties()
+        }
+    }
+    var badgeSizeHeightNegative: CGFloat = 0.0 {
+        didSet {
+            refreshBadgeLabelProperties()
+        }
+    }
+    var badgeSizeWidthNegative: CGFloat = 0.0 {
         didSet {
             refreshBadgeLabelProperties()
         }
@@ -126,8 +136,8 @@ extension ENMBadgedBarButtonItem {
         
         self.badgeLabel.frame = CGRectMake(self.badgeOriginX,
             self.badgeOriginY,
-            minWidth + padding,
-            minHeight + padding)
+            minWidth + padding - badgeSizeWidthNegative,
+            minHeight + padding - badgeSizeHeightNegative)
         self.badgeLabel.layer.cornerRadius = (minHeight + padding) / 2
         self.badgeLabel.layer.masksToBounds = true
     }
